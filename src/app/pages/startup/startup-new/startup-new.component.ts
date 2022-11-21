@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { ToastrService } from 'ngx-toastr';
-import Quill from 'quill';
-import 'quill-emoji/dist/quill-emoji.js';
+// import Quill from 'quill';
+// import 'quill-emoji/dist/quill-emoji.js';
+
 import { QuillConfig } from '../../../utilities/quill-config'
 
 import { StartupService } from 'src/app/services/startup.service';
@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { User } from 'src/app/auth/user.model';
 import { Subscription } from 'rxjs';
 import { SendInBlueService } from 'src/app/services/sendinblue.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-startup-new',
@@ -29,10 +30,13 @@ export class StartupNewComponent implements OnInit {
   nextPressed = false; submitted = false; 
   marketsList =[]; productForm: FormGroup; images = []; 
 
+  isBrowser;
+
   constructor(private formBuilder: FormBuilder, private stratupService: StartupService, 
     private authService : AuthService, private router:Router, private sendInBlueService: SendInBlueService,
-    private toastrService:ToastrService
+    private toastrService:ToastrService, @Inject(PLATFORM_ID) private platformId: any
   ) {
+    this.isBrowser = isPlatformBrowser(platformId);
       this.userSub = this.authService.user.subscribe(user => {
         if(!!user){
           this.user = user;
@@ -40,11 +44,11 @@ export class StartupNewComponent implements OnInit {
       });
       this.quillConfig = QuillConfig.getQuillConfig();
 
-      const icons = Quill.import('ui/icons');
-      icons['undo'] = '<svg viewbox="0 0 18 18"><polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>' +
-        '<path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path></svg>';
-      icons['redo'] = '<svg viewbox="0 0 18 18"><polygon class="ql-fill ql-stroke" points="12 10 14 12 16 10 12 10"></polygon>' +
-        '<path class="ql-stroke" d="M9.91,13.91A4.6,4.6,0,0,1,9,14a5,5,0,1,1,5-5"></path></svg>';        
+      // const icons = Quill.import('ui/icons');
+      // icons['undo'] = '<svg viewbox="0 0 18 18"><polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>' +
+      //   '<path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path></svg>';
+      // icons['redo'] = '<svg viewbox="0 0 18 18"><polygon class="ql-fill ql-stroke" points="12 10 14 12 16 10 12 10"></polygon>' +
+      //   '<path class="ql-stroke" d="M9.91,13.91A4.6,4.6,0,0,1,9,14a5,5,0,1,1,5-5"></path></svg>';        
   }
 
   ngOnInit(): void {

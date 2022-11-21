@@ -39,7 +39,7 @@ export class StartupsComponent implements OnInit {
     this.userService.getProducts(this.username).subscribe(
       res => {
         this.productsData = res.data;
-        console.log(this.productsData);
+        // console.log(this.productsData);
         this.isLoading = false; 
       },
       errorMessage => { 

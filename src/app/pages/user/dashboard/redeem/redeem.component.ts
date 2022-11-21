@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { DealService } from 'src/app/services/deal.service';
 import { DealHomeService } from 'src/app/services/deal_home.service';
 import { UserService } from 'src/app/services/user.service';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 import { ShowToasterService } from 'src/app/shared/show-toaster-service.service';
 import { environment } from 'src/environments/environment';
 
@@ -23,7 +24,7 @@ export class RedeemComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router:Router,
     private userService : UserService,
-    private toastrService:ShowToasterService
+    private toastrService:ShowToasterService, private windowRefService: WindowRefService
   ) 
   { 
     this.routeSub = this.route.params.subscribe((params: Params) => {
@@ -67,7 +68,7 @@ export class RedeemComponent implements OnInit {
   onGoToProduct(websiteUrl:string){
     const redeemUrl = `${websiteUrl}?ref="bufferapps"`;
     if(redeemUrl)
-      window.open(redeemUrl, "_blank");
+    this.windowRefService.nativeWindow.open(redeemUrl, "_blank");
   }
   
   copyRewardCode(val: string){

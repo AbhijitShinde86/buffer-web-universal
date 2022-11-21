@@ -41,7 +41,7 @@ export class QuestionsService {
     }
 
     addQuestion(question:any){
-        console.log(question)
+        // console.log(question)
         return this.http
         .post<Response>(
             `${environment.serverApiURL}/web-deal-question`,{

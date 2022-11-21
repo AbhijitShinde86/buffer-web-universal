@@ -30,10 +30,6 @@ export class JoinBetaComponent implements OnInit {
     private toastrService:ShowToasterService,
     private urlService: UrlService
   ) { 
-    // if(!this.authService.checkIsStillLogged()){
-    //   this.authService.logout();
-    //   window.location.reload();
-    // }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
         this.user = user;

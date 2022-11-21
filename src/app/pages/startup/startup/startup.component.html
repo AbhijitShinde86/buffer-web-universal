@@ -176,20 +176,25 @@
                             <div class="userdialogbox w-100 ms-3">
                                 <h6 class="fw-bold">{{user.firstName}}</h6>
                                 <!-- <textarea class="form-control my-3" rows="3" [(ngModel)]="commentText"></textarea> -->
-                                <quill-editor [modules]="quillConfig" [(ngModel)]="commentText" [styles]="{height: 'auto', border: 'none' }"  ></quill-editor>
+                                <ng-container *ngIf="isBrowser">
+                                    <quill-editor [modules]="quillConfig" [(ngModel)]="commentText" [styles]="{height: 'auto', border: 'none' }"  ></quill-editor>
+                                </ng-container>
                                 <div class="text-end mt-2"><button class="btn btn-pstcom btn-sm" (click)="postComment()">Post Comment</button></div>
                             </div>
                         </div>
                     </div>    
-                    <comments [comments]="comments" currentStartupId="{{startup?._id}}" [currentUser]="user" [isVendor]="isVendor" [startupUserId]="startup?.userId?._id"></comments>
+                    <ng-container *ngIf="isBrowser">
+                        <comments [comments]="comments" currentStartupId="{{startup?._id}}" [currentUser]="user" [isVendor]="isVendor" [startupUserId]="startup?.userId?._id"></comments>
+                    </ng-container>
                     <div *ngIf="!user">
                         <p class="comment-msg" (click)="onLaunchLogin()"> {{ comments.length > 0 ? 'Join to leave a comment' : 'Join to start off the discussion' }}</p>
                     </div>
                 </div>
                 
                 <div *ngIf="cutTab =='feedback'">
-                    <feedbacks [feedbacks]="feedbacks" currentStartupId="{{startup?._id}}" [currentUser]="user" [isVendor]="isVendor" [startupUserId]="startup?.userId?._id"></feedbacks>
-                    
+                    <ng-container *ngIf="isBrowser">
+                        <feedbacks [feedbacks]="feedbacks" currentStartupId="{{startup?._id}}" [currentUser]="user" [isVendor]="isVendor" [startupUserId]="startup?.userId?._id"></feedbacks>
+                    </ng-container>
                     <div class="mb-4" *ngIf="startupExpired">
                         <div class="mt-2 text-center">
                             <button class="btn btn-outline-dark fontsm w-35 mw-100">Launch ended</button>

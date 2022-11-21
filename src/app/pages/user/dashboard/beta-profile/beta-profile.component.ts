@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 
 @Component({
   selector: 'app-beta-profile',
@@ -21,12 +22,12 @@ export class BetaProfileComponent implements OnInit {
   
   constructor(private formBuilder: FormBuilder,
     private userService:UserService, private authService: AuthService,
-    private toastrService:ToastrService
+    private toastrService:ToastrService, private windowRefService: WindowRefService
   ) {     
     this.initializeForm(); 
     if(!this.authService.checkIsStillLogged()){
       this.authService.logout();
-      window.location.reload();
+      this.windowRefService.nativeWindow.location.reload();
     }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
@@ -101,7 +102,7 @@ export class BetaProfileComponent implements OnInit {
           this.requestForm.reset();
           this.isLoading = false; 
           this.toastrService.success("Beta profile updated successfully");
-          window.location.reload();
+          this.windowRefService.nativeWindow.location.reload();
         },
         errorMessage => {
           this.isLoading = false; 

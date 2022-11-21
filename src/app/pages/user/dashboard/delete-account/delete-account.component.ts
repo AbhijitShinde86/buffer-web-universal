@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 
 @Component({
   selector: 'app-delete-account',
@@ -18,10 +19,10 @@ export class DeleteAccountComponent implements OnInit {
   user:User; isLoading = false; 
 
   constructor(private authService: AuthService, private userService:UserService,
-  private toastrService:ToastrService) {
+  private toastrService:ToastrService, private windowRefService: WindowRefService) {
     if(!this.authService.checkIsStillLogged()){
       this.authService.logout();
-      window.location.reload();
+      this.windowRefService.nativeWindow.location.reload();
     }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
@@ -42,7 +43,7 @@ export class DeleteAccountComponent implements OnInit {
           this.isLoading = false;
           
           this.authService.logout();
-          window.location.reload();
+          this.windowRefService.nativeWindow.location.reload();
         },
         errorMessage => {
           this.isLoading = false; 

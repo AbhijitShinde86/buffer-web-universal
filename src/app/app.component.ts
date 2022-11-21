@@ -1,12 +1,13 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 import { UrlService } from './shared/url.service';
 import { AuthService } from './auth/auth.service';
 import { LoggingService } from './shared/logging.service';
-import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
+
 
 export interface Response{
   status:{

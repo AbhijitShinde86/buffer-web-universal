@@ -14,9 +14,9 @@ export class QuillConfig{
                 'emoji': function() {}
               }
             },
-            "emoji-toolbar": true,
-            "emoji-textarea": true,
-            "emoji-shortname": true,
+            // "emoji-toolbar": true,
+            // "emoji-textarea": true,
+            // "emoji-shortname": true,
             history: { delay: 2000, maxStack: 500, userOnly: true }
         };
     }
@@ -24,9 +24,9 @@ export class QuillConfig{
     static getCommentQuillConfig() {
       return {
           toolbar:false,
-          "emoji-toolbar": true,
-          "emoji-textarea": true,
-          "emoji-shortname": true,
+          // "emoji-toolbar": true,
+          // "emoji-textarea": true,
+          // "emoji-shortname": true,
           history: { delay: 2000, maxStack: 500, userOnly: true }
       };
   }

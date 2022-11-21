@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 
 @Component({
   selector: 'app-profile',
@@ -25,12 +26,12 @@ export class ProfileComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private userService:UserService, private authService: AuthService,
-    private toastrService:ToastrService
+    private toastrService:ToastrService, private windowRefService: WindowRefService
   ) {
     this.initializeForm(); 
     if(!this.authService.checkIsStillLogged()){
       this.authService.logout();
-      window.location.reload();
+      this.windowRefService.nativeWindow.location.reload();
     }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
@@ -89,7 +90,7 @@ export class ProfileComponent implements OnInit {
           this.toastrService.success("User details updated successfully");
           this.initializeForm();   
           this.userForm.reset();
-          window.location.reload();
+          this.windowRefService.nativeWindow.location.reload();
         },
         errorMessage => {
           this.isLoading = false; 

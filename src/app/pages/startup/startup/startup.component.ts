@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
-import 'quill-emoji/dist/quill-emoji.js';
+// import 'quill-emoji/dist/quill-emoji.js';
 
 import { QuillConfig } from '../../../utilities/quill-config'
 import { AuthService } from 'src/app/auth/auth.service';
@@ -15,6 +15,8 @@ import { StartupService } from 'src/app/services/startup.service';
 import { ShowToasterService } from 'src/app/shared/show-toaster-service.service';
 import { environment } from 'src/environments/environment';
 import { SEOService } from '../../../services/SEO.service';
+import { WindowRefService } from 'src/app/services/windowRef.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-startup',
@@ -35,12 +37,16 @@ export class StartupComponent implements OnInit {
   reportModalDisplay = 'none'; shareModalDisplay = 'none';
   comments=[]; feedbacks=[]; isVendor= false; quillConfig;
 
+  isBrowser;
+
   constructor(private route: ActivatedRoute, private router:Router, private betaHomeService:BetaHomeService, 
     private startupService: StartupService, private feedbacksService:FeedbacksService,
     private authService : AuthService, private commentsService:CommentsService,
     private toastrService:ShowToasterService,
-    private meta:Meta, private title:Title, private seoService: SEOService
+    private meta:Meta, private title:Title, private seoService: SEOService,
+    @Inject(PLATFORM_ID) private platformId: any, private windowRefService: WindowRefService
   ) {   
+      this.isBrowser = isPlatformBrowser(platformId);
       this.betaBaseUrl = environment.betaBaseUrl;
       this.startup = null; 
       this.userSub = this.authService.user.subscribe(user => {
@@ -185,7 +191,9 @@ export class StartupComponent implements OnInit {
               //console.log(resData);
               this.isLoading = false; 
               this.toastrService.success("Join beta request raised successfully");
-              window.location.reload();
+              if(isPlatformBrowser(this.platformId)) {
+                this.windowRefService.nativeWindow.location.reload();
+              }
             },
             errorMessage => {
               this.isLoading = false; 

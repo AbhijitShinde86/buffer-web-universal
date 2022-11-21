@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-
 import { Patterns } from 'src/app/utilities/patterns';
 import { SendInBlueService } from 'src/app/services/sendinblue.service';
 import { helper } from '../../utilities/helper'
@@ -157,7 +156,7 @@ export class BetaHomeComponent implements OnInit {
             this.toastrService.success("Email subscribe successfully");
           },
           errorMessage => {
-            console.log(errorMessage.error);
+            // console.log(errorMessage.error);
             this.isLoading = false; this.submitted = false; 
             if( errorMessage.error.code == 'duplicate_parameter'){              
               this.toastrService.success("Email subscribe successfully");

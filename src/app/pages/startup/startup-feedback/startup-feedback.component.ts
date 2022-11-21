@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
 import { Subscription } from 'rxjs';
+
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { BetaHomeService } from 'src/app/services/beta_home.service';
 import { StartupService } from 'src/app/services/startup.service';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 import { ShowToasterService } from 'src/app/shared/show-toaster-service.service';
 import { environment } from 'src/environments/environment';
 
@@ -34,10 +35,10 @@ export class StartupFeedbackComponent implements OnInit {
   constructor(private betaHomeService:BetaHomeService, private startupService: StartupService,
     private route: ActivatedRoute, private router:Router,
     private formBuilder: FormBuilder, private authService : AuthService, 
-    private toastrService:ShowToasterService) { 
+    private toastrService:ShowToasterService, private windowRefService: WindowRefService) { 
       if(!this.authService.checkIsStillLogged()){
         this.authService.logout();
-        window.location.reload();
+        this.windowRefService.nativeWindow.location.reload();
       }
       this.userSub = this.authService.user.subscribe(user => {
         if(!!user){

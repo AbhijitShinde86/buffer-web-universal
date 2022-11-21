@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit {
             this.toastrService.success("Email subscribe successfully");
           },
           errorMessage => {
-            console.log(errorMessage.error);
+            // console.log(errorMessage.error);
             this.isLoading = false; this.submitted = false; 
             if( errorMessage.error.code == 'duplicate_parameter'){              
               this.toastrService.success("Email subscribe successfully");

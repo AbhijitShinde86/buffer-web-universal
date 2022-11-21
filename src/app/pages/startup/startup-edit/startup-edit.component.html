@@ -33,8 +33,9 @@
                 </div>
                 <div class="mb-3 submitquill">
                     <label>Product Description</label>
-                    <quill-editor [modules]="quillConfig" placeholder="Product Description" formControlName="description" [styles]="{height: 'auto', border: '1px solid #ccc' }"  >
-                    </quill-editor>
+                    <ng-container *ngIf="isBrowser">
+                        <quill-editor [modules]="quillConfig" placeholder="Product Description" formControlName="description" [styles]="{height: 'auto', border: '1px solid #ccc' }"  ></quill-editor>
+                    </ng-container>
                     <div *ngIf="submitted && f.description.errors" class="invalid-feedback" style="display: block;">
                         <div *ngIf="f.description.errors.required">Product description is required</div>                     
                     </div>
@@ -90,8 +91,9 @@
                 <div class="mb-3">
                     <label>Founder Note</label>
                     <!-- <textarea rows="5" placeholder="Founder Note"  formControlName="founderNote"></textarea> -->
-                    <quill-editor [modules]="quillConfig" placeholder="Product Description" formControlName="founderNote" [styles]="{height: '125px', border: '1px solid #ccc' }"  >
-                    </quill-editor>
+                    <ng-container *ngIf="isBrowser">
+                        <quill-editor [modules]="quillConfig" placeholder="Product Description" formControlName="founderNote" [styles]="{height: '125px', border: '1px solid #ccc' }"  ></quill-editor>
+                    </ng-container>
                 </div>
                 <div class="mb-3">
                     <label>Offer for bufferapps community</label>

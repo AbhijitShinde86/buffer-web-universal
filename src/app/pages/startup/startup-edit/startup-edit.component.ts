@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
 import { Subscription } from 'rxjs';
-import Quill from 'quill';
-import 'quill-emoji/dist/quill-emoji.js';
+// import Quill from 'quill';
+// import 'quill-emoji/dist/quill-emoji.js';
 
 import { QuillConfig } from '../../../utilities/quill-config'
 import { BetaHomeService } from 'src/app/services/beta_home.service';
@@ -12,6 +11,8 @@ import { StartupService } from 'src/app/services/startup.service';
 import { ShowToasterService } from 'src/app/shared/show-toaster-service.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { environment } from 'src/environments/environment';
+import { isPlatformBrowser } from '@angular/common';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 
 @Component({
   selector: 'app-startup-edit',
@@ -28,22 +29,26 @@ export class StartupEditComponent implements OnInit {
   startupLink:string; startup: any; isLoading = false; submitted = false;  
   marketsList =[]; productForm: FormGroup; images = []; oldImages = []; 
 
+  isBrowser;
+
   constructor(private route: ActivatedRoute, private router:Router,
     private betaHomeService:BetaHomeService,private authService : AuthService,
     private formBuilder: FormBuilder, private stratupService: StartupService,
-    private toastrService:ShowToasterService
+    private toastrService:ShowToasterService, @Inject(PLATFORM_ID) private platformId: any, 
+    private windowRefService: WindowRefService
   ) { 
+    this.isBrowser = isPlatformBrowser(platformId);
     if(!this.authService.checkIsStillLogged()){
       this.authService.logout();
-      window.location.reload();
+      this.windowRefService.nativeWindow.location.reload();
     }
     this.quillConfig = QuillConfig.getQuillConfig();
 
-    const icons = Quill.import('ui/icons');
-    icons['undo'] = '<svg viewbox="0 0 18 18"><polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>' +
-      '<path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path></svg>';
-    icons['redo'] = '<svg viewbox="0 0 18 18"><polygon class="ql-fill ql-stroke" points="12 10 14 12 16 10 12 10"></polygon>' +
-      '<path class="ql-stroke" d="M9.91,13.91A4.6,4.6,0,0,1,9,14a5,5,0,1,1,5-5"></path></svg>'; 
+    // const icons = Quill.import('ui/icons');
+    // icons['undo'] = '<svg viewbox="0 0 18 18"><polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>' +
+    //   '<path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path></svg>';
+    // icons['redo'] = '<svg viewbox="0 0 18 18"><polygon class="ql-fill ql-stroke" points="12 10 14 12 16 10 12 10"></polygon>' +
+    //   '<path class="ql-stroke" d="M9.91,13.91A4.6,4.6,0,0,1,9,14a5,5,0,1,1,5-5"></path></svg>'; 
         
     this.initializeForm();
     this.getMarkets(); 

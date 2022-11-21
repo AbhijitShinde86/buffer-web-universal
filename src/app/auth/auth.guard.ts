@@ -32,6 +32,7 @@ export class AuthGuard implements CanActivate {
         if (isAuth) {      
           return true;
         }
+        this.authService.autoLogin();
         return this.router.createUrlTree(['/']);
       })
       // tap(isAuth => {
@@ -41,5 +42,31 @@ export class AuthGuard implements CanActivate {
       // })
     );
   }
+  
+  // canActivate(
+  //   route: ActivatedRouteSnapshot,
+  //   router: RouterStateSnapshot
+  // ):
+  //   | boolean
+  //   | UrlTree
+  //   | Promise<boolean | UrlTree>
+  //   | Observable<boolean | UrlTree> {
+  //   return this.authService.user.pipe(
+  //     take(1),
+  //     map(user => {
+  //       console.log("canActivate : ", user)
+  //       const isAuth = !!user;     
+  //       if (isAuth) {      
+  //         return true;
+  //       }
+  //       return this.router.createUrlTree(['/']);
+  //     })
+  //     // tap(isAuth => {
+  //     //   if (!isAuth) {
+  //     //     this.router.navigate(['/auth']);
+  //     //   }
+  //     // })
+  //   );
+  // }
 }
 

@@ -73,7 +73,7 @@ export class FeedbacksService {
     }
 
     addFeedbackReply(feedback:any){
-        console.log(feedback)
+        // console.log(feedback)
         return this.http
         .post<Response>(
             `${environment.serverApiURL}/web-startup/addFeedbackReply`,{

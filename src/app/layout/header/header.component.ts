@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { SocialAuthService, GoogleLoginProvider,FacebookLoginProvider } from 'angularx-social-login';
@@ -14,6 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Patterns } from 'src/app/utilities/patterns';
 
 import { SendInBlueService } from 'src/app/services/sendinblue.service';
+import { isPlatformBrowser } from '@angular/common';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 
 @Component({
   selector: 'app-header',
@@ -43,7 +45,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService:AuthService, private router:Router, private formBuilder: FormBuilder, 
     private betaHomeService:BetaHomeService, private socialAuthService: SocialAuthService, 
-    private sendInBlueService: SendInBlueService, private toastrService:ToastrService
+    private sendInBlueService: SendInBlueService, private toastrService:ToastrService,
+    @Inject(PLATFORM_ID) private platformId: any, private windowRefService: WindowRefService
   ) {     
     this.launchLoginSub = this.authService.launchLogin.subscribe(launchLoginData => {
       if(launchLoginData){
@@ -122,7 +125,7 @@ export class HeaderComponent implements OnInit {
   private checkUserForSignUp(email: string) {
     this.authService.getUserByEmail(email).subscribe(
       resData => {
-        console.log(resData.data);
+        // console.log(resData.data);
         if (resData.data) {
           this.isLoading = false; 
           this.showError("User exists already, please login instead.");
@@ -377,13 +380,17 @@ export class HeaderComponent implements OnInit {
     this.signUpModalDisplay = 'none';
     // this.router.navigate(['/']);
     if(!this.launchLoginData?.blockReloadPage){
-      window.location.reload();
+      if(isPlatformBrowser(this.platformId)) {
+        this.windowRefService.nativeWindow.location.reload();
+      }
     }
   }
 
   onLogout() {
     this.authService.logout();
-    window.location.reload();
+    if(isPlatformBrowser(this.platformId)) {
+      this.windowRefService.nativeWindow.location.reload();
+    }
   }
   
   onSearchTextChange(){

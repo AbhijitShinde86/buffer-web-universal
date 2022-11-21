@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -26,11 +27,11 @@ export class PurchasedDealsComponent implements OnInit {
 
   constructor(private authService: AuthService, private userService:UserService,
     private router:Router, private cartService :CartService,
-    private toastrService:ToastrService) 
+    private toastrService:ToastrService, private windowRefService: WindowRefService) 
   { 
     if(!this.authService.checkIsStillLogged()){
       this.authService.logout();
-      window.location.reload();
+      this.windowRefService.nativeWindow.location.reload();
     }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
@@ -154,6 +155,7 @@ export class PurchasedDealsComponent implements OnInit {
     }
 
     this.detailsModalDisplay = 'block';
+    return true;
   }
 
   onInitiateRefund(){
@@ -172,7 +174,7 @@ export class PurchasedDealsComponent implements OnInit {
           this.isLoading = false;
           
           this.toastrService.success("Deal refunded succsessfully");
-          window.location.reload();      
+          this.windowRefService.nativeWindow.location.reload();      
         },
         errorMessage => {
           this.isLoading = false;
@@ -181,6 +183,7 @@ export class PurchasedDealsComponent implements OnInit {
         }        
       );
     }
+    return true;
     //this.router.navigate([`/user/dashboard/refund/${dealLink}/${orderId}`]);
   }
 

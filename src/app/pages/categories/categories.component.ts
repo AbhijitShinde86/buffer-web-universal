@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { ToastrService } from 'ngx-toastr';
+
 import { BetaHomeService } from 'src/app/services/beta_home.service';
 import { environment } from 'src/environments/environment';
 
@@ -25,14 +25,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories(){
-    this.isLoading = true; 
+    this.isLoading = true;
     this.betaHomeService.getCategories().subscribe(
       res => {
         this.categoriesData = res.data;
         // console.log(this.categoriesData)
-        this.isLoading = false; 
+        this.isLoading = false;
       },
-        errorMessage => { this.isLoading = false;  this.toastrService.error(errorMessage); }
+        errorMessage => { this.isLoading = false; this.toastrService.error(errorMessage); }
       )
   }
 

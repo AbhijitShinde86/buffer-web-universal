@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 
 @Component({
   selector: 'app-thank-you',
@@ -9,10 +10,10 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class ThankYouComponent implements OnInit {
 
-  constructor(private authService : AuthService) { 
+  constructor(private authService : AuthService, private windowRefService: WindowRefService) { 
     if(!this.authService.checkIsStillLogged()){
       this.authService.logout();
-      window.location.reload();
+      this.windowRefService.nativeWindow.location.reload();
     }
   }
 

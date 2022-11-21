@@ -20,8 +20,7 @@ export class StartupListComponent implements OnInit {
   size = 8; curPage = 1; totalPages = 0 ;
   
   constructor(private route: ActivatedRoute, private router:Router,
-    private betaHomeService:BetaHomeService,
-    private toastrService:ToastrService
+    private betaHomeService:BetaHomeService, private toastrService:ToastrService
   ) { 
     this.getDefaultData();
     this.routeSub = this.route.params.subscribe((params: Params) => {
@@ -36,7 +35,7 @@ export class StartupListComponent implements OnInit {
 
   getCategory(){
     this.categoryData = []; this.startupList = [];
-    this.isLoading = true; 
+    this.isLoading = true;
     this.betaHomeService.getCategoryByLink(this.categoryLink).subscribe(
       res => {
         if(res.data.length > 0){
@@ -49,9 +48,9 @@ export class StartupListComponent implements OnInit {
         }    
         else
           this.router.navigate([`${environment.betaBaseUrl}/categories`]);   
-        this.isLoading = false; 
+        this.isLoading = false;
       },
-        errorMessage => { this.isLoading = false;  this.toastrService.error(errorMessage); }
+        errorMessage => { this.isLoading = false; this.toastrService.error(errorMessage); }
       )
   }
 

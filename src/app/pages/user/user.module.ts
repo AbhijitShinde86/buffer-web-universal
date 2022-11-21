@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { IMaskModule } from 'angular-imask';
+// import { IMaskModule } from 'angular-imask';
 
 import { AuthGuard } from '../../auth/auth.guard';
 
@@ -16,7 +16,6 @@ import { LikedProductsComponent } from './public-dashboard/liked-products/liked-
 import { BadgesComponent } from './public-dashboard/badges/badges.component';
 import { PurchasedDealsComponent } from './dashboard/purchased-deals/purchased-deals.component';
 import { CreditsComponent } from './dashboard/credits/credits.component';
-import { PaymentsComponent } from './dashboard/payments/payments.component';
 import { StartupsComponent } from './public-dashboard/startups/startups.component';
 import { PublicDashboardComponent } from './public-dashboard/public-dashboard.component';
 import { RedeemComponent } from './dashboard/redeem/redeem.component';
@@ -36,8 +35,7 @@ const routes = [
             { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },
             { path: 'delete', component: DeleteAccountComponent, canActivate: [AuthGuard] },
             { path: 'purchased-deals', component: PurchasedDealsComponent, canActivate: [AuthGuard] },
-            { path: 'credits', component: CreditsComponent, canActivate: [AuthGuard] },
-            // { path: 'payments', component: PaymentsComponent, canActivate: [AuthGuard] },
+            { path: 'credits', component: CreditsComponent, canActivate: [AuthGuard] }
         ] 
     },
     {
@@ -63,7 +61,6 @@ const routes = [
         BadgesComponent,
         PurchasedDealsComponent,
         CreditsComponent,
-        PaymentsComponent,
         StartupsComponent,
         PublicDashboardComponent,
         RedeemComponent,
@@ -77,7 +74,7 @@ const routes = [
         ReactiveFormsModule,
         RouterModule.forChild(routes),
         SharedModule,
-        IMaskModule
+        // IMaskModule
     ],
     providers: []
 })
