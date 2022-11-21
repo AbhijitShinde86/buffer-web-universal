@@ -23,6 +23,7 @@ export class CommentFormComponent implements OnInit {
   handleCancel = new EventEmitter<void>();
 
   form!: FormGroup; quillConfig;
+  
   isBrowser;
   
   constructor(private fb: FormBuilder, @Inject(PLATFORM_ID) private platformId) {

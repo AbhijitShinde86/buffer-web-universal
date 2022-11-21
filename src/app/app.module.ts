@@ -41,15 +41,15 @@ import { LoadingComponent } from './loading';
 
 import { AdminStartupPreviewComponent } from './pages/admin/startup/admin-startup-preview/admin-startup-preview.component';
 
-// import { DealComponent } from './pages/deal/deal/deal.component';
-// import { DealNewComponent } from './pages/deal/deal-new/deal-new.component';
-// import { DealThankYouComponent } from './pages/deal/deal-thank-you/deal-thank-you.component';
-// import { DealCartComponent } from './pages/deal/deal-cart/deal-cart.component';
-// import { DealCheckoutComponent } from './pages/deal/deal-checkout/deal-checkout.component';
-// import { DealCheckoutSuccessComponent } from './pages/deal/deal-checkout-success/deal-checkout-success.component';
-// import { DealCheckoutFailureComponent } from './pages/deal/deal-checkout-failure/deal-checkout-failure.component';
-// import { DealContentComponent } from './pages/deal/deal-content/deal-content.component';
-// import { DealNewThankyouComponent } from './pages/deal/deal-new-thankyou/deal-new-thankyou.component';
+import { DealComponent } from './pages/deal/deal/deal.component';
+import { DealNewComponent } from './pages/deal/deal-new/deal-new.component';
+import { DealThankYouComponent } from './pages/deal/deal-thank-you/deal-thank-you.component';
+import { DealCartComponent } from './pages/deal/deal-cart/deal-cart.component';
+import { DealCheckoutComponent } from './pages/deal/deal-checkout/deal-checkout.component';
+import { DealCheckoutSuccessComponent } from './pages/deal/deal-checkout-success/deal-checkout-success.component';
+import { DealCheckoutFailureComponent } from './pages/deal/deal-checkout-failure/deal-checkout-failure.component';
+import { DealContentComponent } from './pages/deal/deal-content/deal-content.component';
+import { DealNewThankyouComponent } from './pages/deal/deal-new-thankyou/deal-new-thankyou.component';
 
 import { JoinBetaComponent } from './pages/join-beta/join-beta.component';
 
@@ -68,11 +68,11 @@ import { ThankYouComponent } from './pages/startup/thank-you/thank-you.component
 import { StartupFeedbackComponent } from './pages/startup/startup-feedback/startup-feedback.component';
 import { StartupPreviewComponent } from './pages/startup/startup-preview/startup-preview.component';
 
-// import { VendorHomeComponent } from './pages/vendor/vendor-home/vendor-home.component';
-// import { VendorBetaComponent } from './pages/vendor/vendor-beta/vendor-beta.component';
-// import { VendorDealComponent } from './pages/vendor/vendor-deal/vendor-deal.component';
-// import { RequestsComponent } from './pages/vendor/requests/requests.component';
-// import { UserRequestDetailsComponent } from './pages/vendor/user-request-details/user-request-details.component';
+import { VendorHomeComponent } from './pages/vendor/vendor-home/vendor-home.component';
+import { VendorBetaComponent } from './pages/vendor/vendor-beta/vendor-beta.component';
+import { VendorDealComponent } from './pages/vendor/vendor-deal/vendor-deal.component';
+import { RequestsComponent } from './pages/vendor/requests/requests.component';
+import { UserRequestDetailsComponent } from './pages/vendor/user-request-details/user-request-details.component';
 
 @NgModule({
   declarations: [
@@ -92,15 +92,15 @@ import { StartupPreviewComponent } from './pages/startup/startup-preview/startup
 
     AdminStartupPreviewComponent,
 
-    // DealComponent,
-    // DealNewComponent,
-    // DealThankYouComponent,
-    // DealCartComponent,
-    // DealCheckoutComponent,
-    // DealCheckoutSuccessComponent,
-    // DealCheckoutFailureComponent,
-    // DealContentComponent,
-    // DealNewThankyouComponent,
+    DealComponent,
+    DealNewComponent,
+    DealThankYouComponent,
+    DealCartComponent,
+    DealCheckoutComponent,
+    DealCheckoutSuccessComponent,
+    DealCheckoutFailureComponent,
+    DealContentComponent,
+    DealNewThankyouComponent,
 
     JoinBetaComponent,
 
@@ -119,11 +119,11 @@ import { StartupPreviewComponent } from './pages/startup/startup-preview/startup
     StartupFeedbackComponent,
     StartupPreviewComponent,
 
-    // VendorHomeComponent,
-    // VendorBetaComponent,
-    // VendorDealComponent,
-    // RequestsComponent,
-    // UserRequestDetailsComponent
+    VendorHomeComponent,
+    VendorBetaComponent,
+    VendorDealComponent,
+    RequestsComponent,
+    UserRequestDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
