@@ -1,11 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { Appearance, StripeElementsOptions } from '@stripe/stripe-js';
-import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
+import { Appearance, StripeElementsOptions } from '@stripe/stripe-js';
 ;
 // import { StripePaymentElementComponent, StripeService } from 'ngx-stripe';
-import { StripeService, StripeCardComponent } from "ngx-stripe";
-
 import { Observable, Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/auth.service';
@@ -26,7 +23,6 @@ import { environment } from 'src/environments/environment';
 export class DealCheckoutComponent implements OnInit {
   previousUrl: Observable<string> = this.urlService.previousUrl$;
   // @ViewChild(StripePaymentElementComponent) paymentElement: StripePaymentElementComponent;
-  @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
   private userSub:Subscription;
   private checkoutSub:Subscription;
@@ -38,40 +34,20 @@ export class DealCheckoutComponent implements OnInit {
   discAmt = 0; totalAmt = 0; cartPromo = null; selectedCard = null; prevUrl;
   client_secret=null; checkoutData = null;
 
-  // appearance: Appearance = {
-  //   theme: 'stripe',
-  //   labels: 'floating',
-  //   variables: {
-  //     colorPrimary: '#673ab7',
-  //   },
-  // };
-  cardOptions: StripeCardElementOptions = {
-    iconStyle: 'solid',
-    style: {
-      base: {
-        iconColor: '#c4f0ff',
-        color: '#673ab7',
-        fontWeight: 500,
-        fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-        fontSize: '16px',
-        fontSmoothing: 'antialiased',
-        ':-webkit-autofill': {color: '#fce883'},
-        '::placeholder': {color: '#87bbfd'}
-      },
-      invalid: {
-        iconColor: '#ffc7ee',
-        color: '#673ab7'
-      }
-    }
+  appearance: Appearance = {
+    theme: 'stripe',
+    labels: 'floating',
+    variables: {
+      colorPrimary: '#673ab7',
+    },
   };
-
   elementsOptions: StripeElementsOptions = {
     locale: 'en',
   };
   
   constructor(private router:Router, private authService:AuthService, private route: ActivatedRoute, 
     private cartService :CartService,
-    private stripeService: StripeService, 
+    //  private stripeService: StripeService, 
     private urlService: UrlService, private checkoutService:CheckoutService,
     private toastrService:ShowToasterService
   ) { 
@@ -113,45 +89,49 @@ export class DealCheckoutComponent implements OnInit {
   onPlaceOrder(){
     this.calculateAmounts();
     if(this.deals?.length > 0 && this.totalAmt > 0){      
-      // if(confirm("Are you sure to place order?")){
-        this.isLoading = true; 
-        try{
-          this.stripeService.confirmCardPayment(this.client_secret, {
-            payment_method: {
-              card: this.card.element,
-              billing_details: {
-                name: this.user.name,
-                email: this.user.email
-              }
-            }
-          })
-          .subscribe((result:any) => {
-            if (result.error) {
-              this.isLoading = false; 
-              if(result.error.type !== 'validation_error'){
-                // console.log("result.error : ",result.error);
-              }
-              this.toastrService.error(result.error.message);
-            } else if (result.paymentIntent.status === 'succeeded') {
-              this.isLoading = false; 
-              // console.log("result : ", result);
-              // console.log("Payment completed");
-              this.cartService.setPaymentCompleted(this.paymentData?.orderId).subscribe(
-                res => {
-                  this.createOrder(this.paymentData, result.paymentIntent);    
-                },
-                errorMessage => {
-                  this.toastrService.error(errorMessage);
-                }        
-              );
-            }
-          });
-        }catch(err){
-          this.isLoading = false; 
-          // console.log("errorMessage : ",errorMessage);
-          this.toastrService.error(err);
-        }      
-      // }
+      // // if(confirm("Are you sure to place order?")){
+      //   this.isLoading = true; 
+      //   this.stripeService.confirmPayment({
+      //     elements: this.paymentElement.elements,
+      //     confirmParams: {
+      //       payment_method_data: {
+      //         billing_details: {
+      //           name: this.user.name,
+      //           email: this.user.email
+      //         },
+      //       }
+      //     },
+      //     redirect: 'if_required',
+      //   })
+      //   .subscribe({
+      //     next: (result) => {
+      //       if (result.error) {
+      //         this.isLoading = false; 
+      //         if(result.error.type !== 'validation_error'){
+      //           // console.log("result.error : ",result.error);
+      //         }
+      //         this.toastrService.error(result.error.message);
+      //       } else if (result.paymentIntent.status === 'succeeded') {
+      //         this.isLoading = false; 
+      //         // console.log("result : ", result);
+      //         // console.log("Payment completed");
+      //         this.cartService.setPaymentCompleted(this.paymentData?.orderId).subscribe(
+      //           res => {
+      //             this.createOrder(this.paymentData, result.paymentIntent);    
+      //           },
+      //           errorMessage => {
+      //             this.toastrService.error(errorMessage);
+      //           }        
+      //         );
+      //       }
+      //     },
+      //     error: (errorMessage) => {
+      //       this.isLoading = false; 
+      //       // console.log("errorMessage : ",errorMessage);
+      //       this.toastrService.error(errorMessage);
+      //     },
+      //   });
+      // // }
     }
   }
 

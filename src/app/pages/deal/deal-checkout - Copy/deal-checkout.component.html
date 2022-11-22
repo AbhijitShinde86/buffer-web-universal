@@ -20,8 +20,8 @@
           </div>
           <div class="p-3" style="min-height: 250px;">
             <ng-container *ngIf="elementsOptions?.clientSecret">
-              <!-- <ngx-stripe-payment [appearance]="appearance" [clientSecret]="elementsOptions?.clientSecret"></ngx-stripe-payment> -->
-              <ngx-stripe-card [options]="cardOptions"></ngx-stripe-card>
+              <ngx-stripe-payment [appearance]="appearance" [clientSecret]="elementsOptions?.clientSecret">
+              </ngx-stripe-payment>
             </ng-container>
           </div>
         </div>
