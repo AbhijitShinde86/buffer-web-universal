@@ -24,13 +24,14 @@ export class DealCartComponent implements OnInit {
 
   isLoading = true; user:User; stripe:any; qtyList = []; balRewardAmt = 0;
   deals = []; subTotal = 0; subDiscAmount = 0; rewardAmt = 0; 
-  discAmt = 0; totalAmt = 0; cartPromo = null; 
+  discAmt = 0; totalAmt = 0; cartPromo = null; couponCode= ''; couponError = null; 
   stripeId:any; countryId=null; countryData; countryList=[]; prevUrl;
 
   constructor(private router:Router, private authService:AuthService,
     private cartService :CartService, private urlService: UrlService, private checkoutService:CheckoutService,
     private toastrService:ShowToasterService
-  ) {       
+  ) {     
+    this.setCartPromoDefaultVal();      
     this.getCountryList();
     this.loadQuantityList();
     this.userSub = this.authService.user.subscribe(user => {
@@ -199,9 +200,9 @@ export class DealCartComponent implements OnInit {
     this.router.navigate([`${environment.dealsBaseUrl}`]);
   }
 
-  calculateAmounts(){
-    this.subTotal = 0; this.discAmt = 0; this.totalAmt = 0, 
-    this.subDiscAmount =0; this.rewardAmt = 0; 
+  calculateAmounts(){    
+    this.subTotal = 0.0; this.discAmt = 0.0; this.totalAmt = 0.0, 
+    this.subDiscAmount =0.0; this.rewardAmt = 0.0; 
     
     const calItemTotal = this.deals.reduce(function(sum, current) {
       const calAmount = (+current.discPrice * + current.quantity);
@@ -214,16 +215,21 @@ export class DealCartComponent implements OnInit {
     }, 0);
 
     this.subDiscAmount = calItemDiscTotal;
-    
-    this.discAmt = this.cartPromo?.amount == undefined ? 0 : this.cartPromo?.amount;
-
     this.subTotal = calItemTotal; 
-    this.rewardAmt =this.balRewardAmt;
-    if(this.balRewardAmt > 0 && this.balRewardAmt > this.subTotal){
-      this.rewardAmt = this.subTotal;
-    }  
 
-    this.totalAmt = (( +this.subTotal - +this.rewardAmt ) - +this.discAmt );
+    let discAmount = 0; 
+    discAmount = this.cartPromo.couponPer > 0 ? ((+this.subTotal * this.cartPromo.couponPer ) / 100) : 0;
+    this.cartPromo.amount = discAmount;
+    this.discAmt = discAmount;
+
+    let calTotAmount = ( +this.subTotal - +this.discAmt )
+
+    this.rewardAmt =this.balRewardAmt;
+    if(this.balRewardAmt > 0 && this.balRewardAmt > calTotAmount){
+      this.rewardAmt = calTotAmount;
+    }  
+    
+    this.totalAmt = (+calTotAmount - +this.rewardAmt);
     // console.log("subTotal : ", this.subTotal);
     // console.log("rewardAmt : ", this.rewardAmt);
     // console.log("discAmt : ", this.discAmt);
@@ -321,16 +327,21 @@ export class DealCartComponent implements OnInit {
           }, 0);
 
           subDiscAmount = calItemDiscTotal;
-          
-          discAmt = this.cartPromo?.amount == undefined ? 0 : this.cartPromo?.amount;
-
           subTotal = calItemTotal; 
-          rewardAmt =balRewardAmt;
-          if(balRewardAmt > 0 && balRewardAmt >= subTotal){
-            rewardAmt = subTotal - 1;
-          }   
 
-          totalAmt = (( +subTotal - +rewardAmt ) - +discAmt );
+          let discAmount = 0; 
+          discAmount = this.cartPromo.couponPer > 0 ? ((+this.subTotal * this.cartPromo.couponPer ) / 100) : 0;
+          this.cartPromo.amount = discAmount;
+          discAmt = discAmount;
+
+          let calTotAmount = ( +subTotal - +discAmt )
+
+          rewardAmt =balRewardAmt;
+          if(balRewardAmt > 0 && balRewardAmt >= calTotAmount){
+            rewardAmt = calTotAmount - 1;
+          }  
+          
+          totalAmt = (+calTotAmount - +rewardAmt);
 
           if(countryId && countryCode2D && currencyCode){    
             if(totalAmt > 0){
@@ -361,7 +372,7 @@ export class DealCartComponent implements OnInit {
     }).subscribe(
       resData => {
         // console.log(resData);
-        this.checkoutService.setCheckoutData(resData.data);
+        this.checkoutService.setCheckoutData({ ...resData.data, cartPromo: this.cartPromo});
         this.router.navigate([`${environment.dealsBaseUrl}/checkout`],{queryParams: {client_secret: resData.data.client_secret }})
         this.isLoading = false;
             
@@ -372,6 +383,74 @@ export class DealCartComponent implements OnInit {
         this.toastrService.error(errorMessage);
       }  
     );
+  }
+
+  onApplyPromo(){
+    this.couponError = null;
+
+    this.isLoading = true; 
+    this.cartService.applyPromo(this.user.id,this.couponCode,this.totalAmt).subscribe(
+      resData => {
+        // console.log("resData : ", resData);
+        this.isLoading = false;       
+
+        const coupon = resData.data;
+        let discAmount = 0;
+        discAmount = Math.round((this.totalAmt * coupon.percent ) / 100);
+        // if(discAmount > coupon.perMaxDisc)
+        //     discAmount = coupon.perMaxDisc;
+        this.cartPromo = { 
+          id : coupon._id, code : coupon.couponCode, amount : discAmount, 
+          couponPer :coupon.percent , couponTransId : coupon.couponTransId
+        };
+        // console.log(this.cartPromo)
+        this.calculateAmounts();
+        // this.toastrService.success("Coupon applied successfully.");
+      },
+      errorMessage => {
+        this.couponCode = null;
+        this.isLoading = false; 
+        this.showCouponError(errorMessage);
+      }        
+    );
+  }
+
+  onRemovePromo(){
+    this.couponError = null;
+    if(this.cartPromo.code && this.cartPromo.couponTransId){
+      this.isLoading = true; 
+      
+      this.cartService.removePromo(this.cartPromo.couponTransId).subscribe(
+        resData => {
+          //console.log(resData);
+          this.isLoading = false;
+          
+          this.couponCode = null;
+          this.setCartPromoDefaultVal();
+          this.calculateAmounts();
+          // this.toastrService.success("Coupon removed successfully.");
+        },
+        errorMessage => {
+          this.isLoading = false; 
+           
+          this.showCouponError(errorMessage);
+        }        
+      );
+    }
+  }
+
+  setCartPromoDefaultVal(){
+    this.cartPromo = { 
+      id : null, code : null, amount : 0, couponPer:0, couponTransId : null
+    }
+  }
+
+  showCouponError(errorMessage){
+    // console.log( errorMessage)
+    this.couponError = errorMessage;
+    setTimeout(() => {
+      this.couponError= null;    
+    }, 2000);
   }
 
   ngOnDestroy(): void {

@@ -109,7 +109,10 @@
       </div>
       <div class="modal-body px-5 py-4">
         <p class="font9rem mb-2">This is a refund process for the product {{toBeRefDealName}}.</p>
-        <p class="font9rem mb-5">The payment of ${{toBeRefAmt}} paid via card and ${{toBeRefRewardAmt}} paid via bufferapps credit will be credited to you.</p>
+        <p [ngClass]="[ toBeRefCouponAmt > 0 ? 'font9rem mb-2' : 'font9rem mb-5']">
+          The payment of ${{toBeRefAmt}} paid via card and ${{toBeRefRewardAmt}} paid via bufferapps credit will be credited to you.
+        </p>
+        <p class="font9rem mb-5" *ngIf="toBeRefCouponAmt > 0">Coupon amount ${{toBeRefCouponAmt}} will less.</p>
         <div class="mb-3">
           <h6 class="mb-1">1) If you paid via credit/debit card</h6>
           <p class="font9rem">The refund will be credited to your bank account within 5-10 business days.</p>

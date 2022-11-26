@@ -119,6 +119,7 @@ export class PurchasedDealsComponent implements OnInit {
     const orderId = order._id;
     const dealId = deal.dealId._id;
     // console.log("orderId : ",orderId," - dealId : ",dealId);
+    // console.log("order : ",order," - deal : ",deal);
 
     if(orderId == null || orderId == undefined || orderId == "")
       return false;
@@ -129,7 +130,7 @@ export class PurchasedDealsComponent implements OnInit {
     this.toBeRefOrderId = orderId; this.toBeRefDealId = dealId; this.toBeRefDealName = deal.dealId.dealName;
 
     const dealAmount = deal.amount;
-    let { rewardAmount, couponAmount, refCouponAmount, refRewardAmount } = order;    
+    let { couponId, couponPer, rewardAmount, couponAmount, refCouponAmount, refRewardAmount } = order;    
 
     rewardAmount = rewardAmount ?? 0;
     couponAmount = couponAmount ?? 0; 
@@ -142,6 +143,11 @@ export class PurchasedDealsComponent implements OnInit {
     let calDealAmount = dealAmount;
     this.toBeRefCouponAmt = 0; this.toBeRefRewardAmt = 0; this.toBeRefAmt = 0;
 
+    if(couponId && couponPer && balCouponAmt > 0){
+      this.toBeRefCouponAmt = ((+dealAmount * +couponPer) / 100 );
+      calDealAmount = calDealAmount - this.toBeRefCouponAmt; 
+    }
+
     if(balRewardAmt > 0){
       if(balRewardAmt > calDealAmount)
         this.toBeRefRewardAmt = calDealAmount;
@@ -153,7 +159,8 @@ export class PurchasedDealsComponent implements OnInit {
     if(calDealAmount > 0){
       this.toBeRefAmt = calDealAmount;
     }
-
+    
+    // console.log("toBeRefCouponAmt : ",this.toBeRefCouponAmt," - toBeRefRewardAmt : ",this.toBeRefRewardAmt," - toBeRefAmt : ",this.toBeRefAmt);
     this.detailsModalDisplay = 'block';
     return true;
   }

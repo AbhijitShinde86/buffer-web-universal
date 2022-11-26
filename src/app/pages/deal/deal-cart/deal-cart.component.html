@@ -55,7 +55,7 @@
             <div class="width30 mw-100">
               <h6>{{deal.dealName}}</h6>
               <div class="d-flex d-lg-block align-items-center">
-                <p class="mb-lg-2">{{deal.currencySign}}{{deal.amount}}</p>
+                <p class="mb-lg-2">{{deal.currencySign}}{{deal.discPrice}}</p>
                 <p class="font8rem color555 ms-3 ms-lg-0">Plan: {{deal?.planName}}</p>
               </div>
             </div>
@@ -88,10 +88,25 @@
       <div class="col-md-4">
         <div class="rounded">
           <div><h4 class="orderbox p-3 mb-0 rounded-top">Order</h4></div>
-          <div class="p-3 border rounded-bottom">
-            <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="p-3 border rounded-bottom">            
+            <div class="">
+              <div class="d-flex">
+                  <input type="text" class="form-control" placeholder="Coupon code" [disabled]="cartPromo.code" 
+                  [(ngModel)]="couponCode" style='text-transform:uppercase' (input)="couponCode = couponCode.toUpperCase()">
+                  <button *ngIf="!cartPromo.code" class="btn btn-primary w-50 fontsm ms-2" (click)="onApplyPromo()">Apply Code</button>
+                  <button *ngIf="cartPromo.code" class="btn btn-warning w-50 fontsm ms-2" (click)="onRemovePromo()">Remove</button>
+              </div>
+            </div>
+            <!-- <em class="font8rem greensucess pb-3">"FLAT20" code appiled sucessfully.</em> -->
+            <em *ngIf="couponError" class="font8rem red mb-3">{{couponError}}</em>
+
+            <div class="d-flex align-items-center justify-content-between mb-2" style="margin-top: 1rem">
               <p class="fontsm">Subtotal</p>
               <p>{{appCurSign}}{{subTotal}}</p>
+            </div>            
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <p class="fontsm">Coupon</p>
+              <p class="cartgreen">-{{appCurSign}}{{discAmt}}</p>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <p class="fontsm">Reward</p>
