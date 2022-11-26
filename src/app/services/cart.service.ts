@@ -207,6 +207,34 @@ export class CartService {
     );
   }
 
+  applyPromo(userId:string, couponCode:string, amount: number){
+    return this.http
+    .post<Response>(`${environment.serverApiURL}/web-deal-cart/applyPromo`,{
+        userId : userId,
+        couponCode : couponCode,
+        amount : amount
+      })
+    .pipe(
+      catchError(this.handleErrorService.handleError),
+      tap(resData => {
+        //console.log(resData);
+        return resData;
+      })
+    );
+  }
+
+  removePromo(couponTransId:any){
+    return this.http
+    .delete<Response>(`${environment.serverApiURL}/web-deal-cart/removePromo/${couponTransId}`)
+    .pipe(
+      catchError(this.handleErrorService.handleError),
+      tap(resData => {
+        //console.log(resData);
+        return resData;
+      })
+    );
+  }
+
   // createCheckoutSession(orderRequest:any){
   //   return this.http
   //   .post<Response>(`${environment.serverApiURL}/web-deal-cart/createCheckoutSession`, orderRequest) 

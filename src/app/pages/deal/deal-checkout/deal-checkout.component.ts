@@ -105,6 +105,7 @@ export class DealCheckoutComponent implements OnInit {
 
   loadStripePayment(data){
     this.paymentData = data;
+    this.cartPromo = data.cartPromo;
     this.stripeId = data.customerId;
     this.elementsOptions.clientSecret = data.client_secret;
     this.paymentFormLoaded = true;
