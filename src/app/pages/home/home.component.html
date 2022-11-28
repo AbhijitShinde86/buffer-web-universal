@@ -16,32 +16,34 @@
         <div class="container">
             <div class="row gx-lg-5">
                 <div class="col-md-8">
-                    <h5 class="pb-3 fw-bold text-white">Recently Added Beta launch Products</h5>
-                    <div class="d-lg-flex mb-4" *ngFor="let startup of recentList;">
-                        <div class="homeprimg">
-                            <div *ngIf="startup.imagePaths?.length == 0">
-                                <img src="assets/gradientbg.png" alt="{{startup.productName}}" class="border-left-radius">
-                            </div>
-                            <div *ngIf="startup.imagePaths?.length > 0">
-                                <img src="{{startup.imagePaths[0].url_preview}}" (error) ="$event.target.src = 'assets/gradientbg.png'" alt="{{startup.productName}}" class="border-left-radius">
-                            </div>
-                        </div>
-                        <div class="border p-4 border-right-radius bg-white homeprdesc">
-                            <h5 class="mb-3">{{startup.productName}}</h5>
-                            <p class="lineclamp font9rem">{{startup.shortDesc}}</p>
-                            <div class="d-flex align-items-center justify-content-end mt-3">
-                                <div class="d-flex align-items-center py-1 px-4 bg-hclap rounded text-white fontsm me-2" (click)="onLikeClick(startup)">
-                                    <span class="me-2">{{startup.likeCount < 0 ? 0 : startup.likeCount}}</span>
-                                    <img *ngIf="startup.userLikeCount == 0 " src="assets/clap.png" alt="like" width="24">
-                                    <img *ngIf="startup.userLikeCount > 0 " src="assets/clap-filled.png" alt="like-filled" width="24">
-                                    <span class="ms-2">Clap</span>
+                    <div *ngIf="recentList.length > 0">
+                        <h5 class="pb-3 fw-bold text-white">Recently Added Beta launch Products</h5>
+                        <div class="d-lg-flex mb-4" *ngFor="let startup of recentList;">
+                            <div class="homeprimg">
+                                <div *ngIf="startup.imagePaths?.length == 0">
+                                    <img src="assets/gradientbg.png" alt="{{startup.productName}}" class="border-left-radius">
                                 </div>
-                                <a (click)="onStartupClick(startup?.startupLink)" class="btn btn-outline-dark px-lg-5 fontsm">See Details</a>
+                                <div *ngIf="startup.imagePaths?.length > 0">
+                                    <img src="{{startup.imagePaths[0].url_preview}}" (error) ="$event.target.src = 'assets/gradientbg.png'" alt="{{startup.productName}}" class="border-left-radius">
+                                </div>
+                            </div>
+                            <div class="border p-4 border-right-radius bg-white homeprdesc">
+                                <h5 class="mb-3">{{startup.productName}}</h5>
+                                <p class="lineclamp font9rem">{{startup.shortDesc}}</p>
+                                <div class="d-flex align-items-center justify-content-end mt-3">
+                                    <div class="d-flex align-items-center py-1 px-4 bg-hclap rounded text-white fontsm me-2" (click)="onLikeClick(startup)">
+                                        <span class="me-2">{{startup.likeCount < 0 ? 0 : startup.likeCount}}</span>
+                                        <img *ngIf="startup.userLikeCount == 0 " src="assets/clap.png" alt="like" width="24">
+                                        <img *ngIf="startup.userLikeCount > 0 " src="assets/clap-filled.png" alt="like-filled" width="24">
+                                        <span class="ms-2">Clap</span>
+                                    </div>
+                                    <a (click)="onStartupClick(startup?.startupLink)" class="btn btn-outline-dark px-lg-5 fontsm">See Details</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-center mt-5">
-                        <a class="btn btn-primary w-35 mw-100" href="https://bufferapps.com/beta-listing">View All</a>
+                        <div class="text-center mt-5">
+                            <a class="btn btn-primary w-35 mw-100" href="https://bufferapps.com/beta-listing">View All</a>
+                        </div>
                     </div>
                 </div>
                 
