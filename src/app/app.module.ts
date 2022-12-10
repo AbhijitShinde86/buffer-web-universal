@@ -4,6 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { TransferHttpModule } from '@gorniv/ngx-universal';
+import { TransferHttpCacheModule } from '@nguniversal/common';
+
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxStripeModule } from 'ngx-stripe';
@@ -127,6 +130,8 @@ import { UserRequestDetailsComponent } from './pages/vendor/user-request-details
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    TransferHttpModule,
+    TransferHttpCacheModule,
     BrowserAnimationsModule,
     FormsModule, 
     ReactiveFormsModule,

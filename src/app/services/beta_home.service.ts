@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { TransferHttpService } from '@gorniv/ngx-universal';
 import { Injectable } from "@angular/core";
 import { catchError, tap } from 'rxjs/operators'
 
@@ -9,7 +9,7 @@ import { HandleErrorService } from "../shared/error-handle.service";
 @Injectable({providedIn:'root'})
 export class BetaHomeService{
     
-    constructor(private http : HttpClient,
+    constructor(private http : TransferHttpService,
         private handleErrorService: HandleErrorService){}
 
     
