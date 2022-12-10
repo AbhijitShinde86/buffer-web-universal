@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   appName:"BufferApps",
   // serverApiURL : "https://api.bufferapps.com/api",
-  serverApiURL : "/backend/api",
+  serverApiURL : "https://staging.bufferapps.com/backend/api",
   // googleClientId: '336338936276-6ci8odb1a9i60g0qliramee0n7bv6u6s.apps.googleusercontent.com',
   googleClientId: '336338617133-tmmkqno68vjqle74o3telgtedfivl3f5.apps.googleusercontent.com',
   facebookAppId: '1821078651565949',  

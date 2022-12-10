@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { TransferHttpService } from '@gorniv/ngx-universal';
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { catchError, tap } from 'rxjs/operators'
@@ -11,7 +11,7 @@ import { HandleErrorService } from "../shared/error-handle.service";
 export class CommentsService {
     comment = new BehaviorSubject<string>(null);
 
-    constructor(private http : HttpClient,
+    constructor(private http : TransferHttpService,
         private handleErrorService: HandleErrorService){}
 
     getStartUpComments(startupId:string, startupUserId:string){
