@@ -91,7 +91,7 @@
           <div class="p-3 border rounded-bottom">            
             <div class="">
               <div class="d-flex">
-                  <input type="text" class="form-control" placeholder="Coupon code" [disabled]="cartPromo.code" 
+                  <input type="text" class="form-control font9rem" placeholder="Coupon code" [disabled]="cartPromo.code" 
                   [(ngModel)]="couponCode" style='text-transform:uppercase' (input)="couponCode = couponCode.toUpperCase()">
                   <button *ngIf="!cartPromo.code" class="btn btn-primary w-50 fontsm ms-2" (click)="onApplyPromo()">Apply Code</button>
                   <button *ngIf="cartPromo.code" class="btn btn-warning w-50 fontsm ms-2" (click)="onRemovePromo()">Remove</button>
