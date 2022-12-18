@@ -32,7 +32,7 @@
           </div>
           <div class="col-md-5">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb font8rem">
+                <ol class="breadcrumb font8rem pt-3 pt-lg-0">
                   <li class="breadcrumb-item"><a href="/" class="text-black text-decoration-none">Home</a></li>
                   <li class="breadcrumb-item"><a href="/lifetime-deals" class="text-black text-decoration-none">lifetime-deals</a></li>
                   <li class="breadcrumb-item active" aria-current="page">{{deal?.dealName}}</li>
@@ -48,11 +48,11 @@
               <h3 class="my-4 d-md-flex align-items-center" *ngIf="deal?.plans?.length > 0"> 
                 <span class="font8rem me-2">Starts from</span>{{deal?.plans[0].currencySign}}{{deal?.plans[0].discPrice}}
               </h3>
-              <div class="w-75" *ngIf="deal?.plans?.length > 0">
+              <div class="mw-100 width75" *ngIf="deal?.plans?.length > 0">
                 <div class="mb-2">
                     <div class="d-flex align-items-center justify-content-between mb-1">
                         <h6>Plans</h6>
-                        <p class="font8rem text-decoration-underline cursorpointer colorblue">View Plan Details</p>
+                        <!-- <p class="font8rem text-decoration-underline cursorpointer colorblue">View Plan Details</p> -->
                     </div>
                     <select class="form-select" [(ngModel)]="curPlan">
                       <option *ngFor="let plan of deal?.plans" [ngValue]="plan" selected>{{plan.currencySign}}{{plan.discPrice}}</option>
@@ -138,7 +138,7 @@
               <div class="mt-5">
                   <div class="row">
                       <div class="col-md-4" *ngFor="let plan of deal?.plans">
-                          <div class="border-cadetblue rounded-3">
+                          <div class="border-cadetblue rounded-3 mb-3">
                               <div class="py-3 text-center">
                                   <h6 class="mb-0">{{plan.planName}}</h6>
                               </div>
@@ -233,7 +233,7 @@
   </section>
 
   <section class="questionsec py-5">
-    <div style="width: 800px; margin: auto;">
+    <div class="container revquediv">
       <h4 class="fw-bold mb-4">Reviews And Questions</h4>
 
       <div class="d-flex align-items-center mb-3">
