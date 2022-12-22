@@ -160,10 +160,9 @@ export class DealContentComponent implements OnInit {
           if(this.dealRequest.contentCount > 0)
             this.router.navigate([`${environment.dealsBaseUrl}/`]);  
         } 
-        else
-          this.router.navigate([`${environment.dealsBaseUrl}/`]);   
-        
-        console.log(this.dealRequest);
+        else{
+          this.router.navigate([`${environment.dealsBaseUrl}/`]); 
+        }
         this.isLoading = false; 
     },
       errorMessage => { this.isLoading = false;  

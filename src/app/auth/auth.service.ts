@@ -237,22 +237,7 @@ export class AuthService {
   // }
 
   autoLogin() {
-    const userData: {
-      email: string;
-      id: string;
-      username:string;
-      _token: string;
-      _tokenExpirationDate: string;
-      name: string,
-      firstName: string,
-      lastName: string,
-      photoUrl: string,
-      scnt:Number,
-      dcnt:Number,
-      ccnt:Number,
-      stripeId:string,
-      isSignUpSucceed
-    } = JSON.parse(this.localstorageService.getItem('userData'));
+    const userData = this.getUserFromLocalStorage();
     if (!userData) {
       this.logout();
       return;
@@ -283,6 +268,7 @@ export class AuthService {
     }
   }
 
+
   logout() {
     this.localstorageService.removeItem('userData');
     this.user.next(null);
@@ -294,6 +280,14 @@ export class AuthService {
   }
 
   checkIsStillLogged(){
+    const userData = this.getUserFromLocalStorage();
+    if (userData)
+      return true;
+    else
+      return false;
+  }
+
+  getUserFromLocalStorage(){
     const userData: {
       email: string;
       id: string;
@@ -310,12 +304,7 @@ export class AuthService {
       stripeId:string,
       isSignUpSucceed
     } = JSON.parse(this.localstorageService.getItem('userData'));
-    if (userData) {
-      return true;
-    }
-    else{
-      return false;
-    }
+    return userData;
   }
 
   autoLogout(expirationDuration: number) {
