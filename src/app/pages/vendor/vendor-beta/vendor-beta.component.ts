@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/auth.service';
 import { VendorService } from 'src/app/services/vendor.service';
-import { WindowRefService } from 'src/app/services/windowRef.service';
+
 
 @Component({
   selector: 'app-vendor-beta',
@@ -21,13 +21,8 @@ export class VendorBetaComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
     private vendorService:VendorService, private authService : AuthService,
-    private toastrService:ToastrService, private windowRefService: WindowRefService
-  ) { 
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
-    
+    private toastrService:ToastrService
+  ) {     
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.startupLink = params['link'];
       if(this.startupLink)

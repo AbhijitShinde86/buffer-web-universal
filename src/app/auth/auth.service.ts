@@ -14,6 +14,8 @@ import { LocalstorageService } from '../services/localstorage.service';
 export class AuthService {
   user = new BehaviorSubject<User>(null);
   launchLogin = new BehaviorSubject<User>(null);
+  loginCompleted = new BehaviorSubject<boolean>(false);  
+  loginCanceled = new BehaviorSubject<boolean>(false);
   cartCount = new BehaviorSubject<Number>(0);
 
   private tokenExpirationTimer: any;

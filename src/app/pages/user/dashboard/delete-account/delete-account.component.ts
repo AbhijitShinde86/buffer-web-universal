@@ -7,6 +7,7 @@ import { User } from 'src/app/auth/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { WindowRefService } from 'src/app/services/windowRef.service';
 
+
 @Component({
   selector: 'app-delete-account',
   templateUrl: './delete-account.component.html',
@@ -19,11 +20,7 @@ export class DeleteAccountComponent implements OnInit {
   user:User; isLoading = false; 
 
   constructor(private authService: AuthService, private userService:UserService,
-  private toastrService:ToastrService, private windowRefService: WindowRefService) {
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
+  private toastrService:ToastrService, private windowRefService: WindowRefService) {     
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
         this.user = user;

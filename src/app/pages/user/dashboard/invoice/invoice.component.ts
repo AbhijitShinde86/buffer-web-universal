@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { WindowRefService } from 'src/app/services/windowRef.service';
+
 import { UrlService } from 'src/app/shared/url.service';
 import { environment } from 'src/environments/environment';
 
@@ -25,10 +26,6 @@ export class InvoiceComponent implements OnInit {
     private userService:UserService, private router:Router, private urlService: UrlService,
     private toastrService:ToastrService, private windowRefService: WindowRefService
   ) { 
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.orderId = params['orderId'];
       if(this.orderId)

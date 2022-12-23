@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { BetaHomeService } from 'src/app/services/beta_home.service';
 import { StartupService } from 'src/app/services/startup.service';
-import { WindowRefService } from 'src/app/services/windowRef.service';
+
 import { ShowToasterService } from 'src/app/shared/show-toaster-service.service';
 import { environment } from 'src/environments/environment';
 
@@ -21,6 +21,8 @@ export class StartupFeedbackComponent implements OnInit {
   private userSub:Subscription;
   private routeSub:Subscription;
   private itemSub: Subscription;
+  private loginCompSub:Subscription;
+  private loginCancelSub:Subscription;
 
   startupLink:string; startup: any;
   isLoading = false; user:User; 
@@ -32,26 +34,36 @@ export class StartupFeedbackComponent implements OnInit {
   integrationText =''; integrationRating = 0;
   designText =''; designRating = 0;
 
+  inLoginProcess = false;
+
   constructor(private betaHomeService:BetaHomeService, private startupService: StartupService,
     private route: ActivatedRoute, private router:Router,
     private formBuilder: FormBuilder, private authService : AuthService, 
-    private toastrService:ShowToasterService, private windowRefService: WindowRefService) { 
-      if(!this.authService.checkIsStillLogged()){
-        this.authService.logout();
-        this.windowRefService.nativeWindow.location.reload();
-      }
+    private toastrService:ShowToasterService) { 
+      this.routeSub = this.route.params.subscribe((params: Params) => {
+        this.startupLink = params['link'];     
+      });
+
       this.userSub = this.authService.user.subscribe(user => {
         if(!!user){
           this.user = user;
+          this.getStartupData();
+        }
+        else{
+          this.inLoginProcess = true;
+          this.authService.setLaunchLogin({"action":"Startup Feedback Page Load", blockReloadPage : true});
         }
       });
-      this.routeSub = this.route.params.subscribe((params: Params) => {
-        this.startupLink = params['link'];
-        if(this.startupLink)
+      this.loginCancelSub = this.authService.loginCompleted.subscribe(flag => {
+        if(this.inLoginProcess && flag){
           this.getStartupData();
-        else
+        }
+      })
+      this.loginCompSub = this.authService.loginCanceled.subscribe(flag => {
+        if(flag){
           this.router.navigate([`${environment.betaBaseUrl}/`]);
-      });
+        }
+      })
     }
 
   ngOnInit(): void {
@@ -216,6 +228,12 @@ export class StartupFeedbackComponent implements OnInit {
     }
     if(this.itemSub){
       this.itemSub.unsubscribe();
-    }    
+    }
+    if(this.loginCompSub){
+      this.loginCompSub.unsubscribe();
+    }   
+    if(this.loginCancelSub){
+      this.loginCancelSub.unsubscribe();
+    }   
   }
 }

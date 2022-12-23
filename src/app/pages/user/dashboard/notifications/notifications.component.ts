@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { UserService } from 'src/app/services/user.service';
-import { WindowRefService } from 'src/app/services/windowRef.service';
+
 
 @Component({
   selector: 'app-notifications',
@@ -19,12 +19,8 @@ export class NotificationsComponent implements OnInit {
   user:User; notificationsData = []; isLoading = false; 
 
   constructor(private authService: AuthService, private userService:UserService,
-    private toastrService:ToastrService, private windowRefService: WindowRefService
+    private toastrService:ToastrService
   ) { 
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
         this.user = user;

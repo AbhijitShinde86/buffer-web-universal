@@ -49,8 +49,6 @@ import { DealNewComponent } from './pages/deal/deal-new/deal-new.component';
 import { DealThankYouComponent } from './pages/deal/deal-thank-you/deal-thank-you.component';
 import { DealCartComponent } from './pages/deal/deal-cart/deal-cart.component';
 import { DealCheckoutComponent } from './pages/deal/deal-checkout/deal-checkout.component';
-import { DealCheckoutSuccessComponent } from './pages/deal/deal-checkout-success/deal-checkout-success.component';
-import { DealCheckoutFailureComponent } from './pages/deal/deal-checkout-failure/deal-checkout-failure.component';
 import { DealContentComponent } from './pages/deal/deal-content/deal-content.component';
 import { DealNewThankyouComponent } from './pages/deal/deal-new-thankyou/deal-new-thankyou.component';
 
@@ -100,8 +98,6 @@ import { UserRequestDetailsComponent } from './pages/vendor/user-request-details
     DealThankYouComponent,
     DealCartComponent,
     DealCheckoutComponent,
-    DealCheckoutSuccessComponent,
-    DealCheckoutFailureComponent,
     DealContentComponent,
     DealNewThankyouComponent,
 

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/auth.service';
 import { VendorService } from 'src/app/services/vendor.service';
-import { WindowRefService } from 'src/app/services/windowRef.service';
+
 import { helper } from 'src/app/utilities/helper';
 
 @Component({
@@ -26,13 +26,8 @@ export class VendorDealComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
     private vendorService:VendorService, private authService : AuthService,
-    private toastrService:ToastrService, private windowRefService: WindowRefService
+    private toastrService:ToastrService
   ) { 
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
-    
     this.routeSub = this.route.params.subscribe((params: Params) => {
       this.dealLink = params['link'];
       if(this.dealLink)

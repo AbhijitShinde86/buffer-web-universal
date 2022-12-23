@@ -9,6 +9,7 @@ import { User } from 'src/app/auth/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { WindowRefService } from 'src/app/services/windowRef.service';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -29,10 +30,6 @@ export class ProfileComponent implements OnInit {
     private toastrService:ToastrService, private windowRefService: WindowRefService
   ) {
     this.initializeForm(); 
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
         this.user = user;

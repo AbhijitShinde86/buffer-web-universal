@@ -16,8 +16,6 @@ import { DealNewComponent } from './pages/deal/deal-new/deal-new.component';
 import { DealThankYouComponent } from './pages/deal/deal-thank-you/deal-thank-you.component';
 import { DealCartComponent } from './pages/deal/deal-cart/deal-cart.component';
 import { DealCheckoutComponent } from './pages/deal/deal-checkout/deal-checkout.component';
-import { DealCheckoutSuccessComponent } from './pages/deal/deal-checkout-success/deal-checkout-success.component';
-import { DealCheckoutFailureComponent } from './pages/deal/deal-checkout-failure/deal-checkout-failure.component';
 import { DealContentComponent } from './pages/deal/deal-content/deal-content.component';
 import { DealNewThankyouComponent } from './pages/deal/deal-new-thankyou/deal-new-thankyou.component';
 
@@ -72,9 +70,9 @@ const routes: Routes = [
     children: [      
       { path: "", pathMatch: 'full', loadChildren: () => import("./pages/beta-home/beta-home.module").then(m => m.BetaHomeModule) },
       { path: 'new', component: StartupNewComponent }, 
-      { path: 'thankyou', component: ThankYouComponent, canActivate: [AuthGuard] },
-      { path: ':link/edit', component: StartupEditComponent, canActivate: [AuthGuard] },
-      { path: ':link/feedback', component: StartupFeedbackComponent, canActivate: [AuthGuard] },
+      { path: 'thankyou', component: ThankYouComponent },//, canActivate: [AuthGuard] },
+      { path: ':link/edit', component: StartupEditComponent },//, canActivate: [AuthGuard] },
+      { path: ':link/feedback', component: StartupFeedbackComponent },//, canActivate: [AuthGuard] },
       { path: ':link/preview', component: StartupPreviewComponent },
       { path: ':link', component: StartupComponent },    
       { path: "categories", loadChildren: () => import("./pages/categories/categories.module").then(m => m.CategoriesModule) }
@@ -86,13 +84,11 @@ const routes: Routes = [
     children: [      
       { path: "", pathMatch: 'full', loadChildren: () => import("./pages/deals-home/deals-home.module").then(m => m.DealsHomeModule) },
       { path: 'new', component: DealNewComponent }, 
-      { path: 'thankyou', component:DealNewThankyouComponent, canActivate: [AuthGuard] },
-      { path: 'cart', component: DealCartComponent, canActivate: [AuthGuard] },
-      { path: 'checkout/success', component: DealCheckoutSuccessComponent, canActivate: [AuthGuard] },
-      { path: 'checkout/failure', component: DealCheckoutFailureComponent, canActivate: [AuthGuard] },
+      { path: 'thankyou', component:DealNewThankyouComponent },//, canActivate: [AuthGuard] },
+      { path: 'cart', component: DealCartComponent },//, canActivate: [AuthGuard] },
       { path: 'checkout', component: DealCheckoutComponent, canActivate: [AuthGuard] },
-      { path: 'purchase-thankyou', component: DealThankYouComponent, canActivate: [AuthGuard] },
-      { path: ':link/draft', component: DealContentComponent, canActivate: [AuthGuard] },
+      { path: 'purchase-thankyou', component: DealThankYouComponent },//, canActivate: [AuthGuard] },
+      { path: ':link/draft', component: DealContentComponent },//, canActivate: [AuthGuard] },
       { path: ':link', component: DealComponent }
     ]
   },  

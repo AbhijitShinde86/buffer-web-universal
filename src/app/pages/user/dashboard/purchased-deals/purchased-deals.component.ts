@@ -10,6 +10,7 @@ import { User } from 'src/app/auth/user.model';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
 import { WindowRefService } from 'src/app/services/windowRef.service';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -29,10 +30,6 @@ export class PurchasedDealsComponent implements OnInit {
     private router:Router, private cartService :CartService,
     private toastrService:ToastrService, private windowRefService: WindowRefService) 
   { 
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
         this.user = user;
