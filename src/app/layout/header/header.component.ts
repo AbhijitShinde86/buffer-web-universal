@@ -17,6 +17,7 @@ import { SendInBlueService } from 'src/app/services/sendinblue.service';
 import { isPlatformBrowser } from '@angular/common';
 import { WindowRefService } from 'src/app/services/windowRef.service';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -72,6 +73,11 @@ export class HeaderComponent implements OnInit {
     this.setBetaDealLink();
   }  
      
+  onModelClose(){
+    this.signUpModalDisplay = 'none';
+    this.authService.loginCanceled.next(true);
+  }
+
   onSwitchMode() {
     this.error = null;
     this.isLoginMode = !this.isLoginMode;
@@ -378,6 +384,7 @@ export class HeaderComponent implements OnInit {
 
   setUser(){
     this.signUpModalDisplay = 'none';
+    this.authService.loginCompleted.next(true);
     // this.router.navigate(['/']);
     if(!this.launchLoginData?.blockReloadPage){
       if(isPlatformBrowser(this.platformId)) {

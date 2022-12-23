@@ -12,7 +12,7 @@ import { ShowToasterService } from 'src/app/shared/show-toaster-service.service'
 import { AuthService } from 'src/app/auth/auth.service';
 import { environment } from 'src/environments/environment';
 import { isPlatformBrowser } from '@angular/common';
-import { WindowRefService } from 'src/app/services/windowRef.service';
+import { User } from 'src/app/auth/user.model';
 
 @Component({
   selector: 'app-startup-edit',
@@ -23,25 +23,27 @@ import { WindowRefService } from 'src/app/services/windowRef.service';
 export class StartupEditComponent implements OnInit {
   private routeSub:Subscription;
   private itemSub: Subscription;
-
+  private userSub:Subscription;
+  private loginCancelSub:Subscription;
+  private loginCompSub:Subscription;
+  
+  user:User; 
   @ViewChild('imageFile') imageFile: any; 
   quillConfig:any; html:any;
   startupLink:string; startup: any; isLoading = false; submitted = false;  
   marketsList =[]; productForm: FormGroup; images = []; oldImages = []; 
 
-  isBrowser;
+  isBrowser; inLoginProcess = false;
 
   constructor(private route: ActivatedRoute, private router:Router,
     private betaHomeService:BetaHomeService,private authService : AuthService,
     private formBuilder: FormBuilder, private stratupService: StartupService,
-    private toastrService:ShowToasterService, @Inject(PLATFORM_ID) private platformId: any, 
-    private windowRefService: WindowRefService
+    private toastrService:ShowToasterService, @Inject(PLATFORM_ID) private platformId: any
   ) { 
+    this.routeSub = this.route.params.subscribe((params: Params) => {      
+      this.startupLink = params['link'];
+    });   
     this.isBrowser = isPlatformBrowser(platformId);
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
     this.quillConfig = QuillConfig.getQuillConfig();
 
     // const icons = Quill.import('ui/icons');
@@ -52,11 +54,26 @@ export class StartupEditComponent implements OnInit {
         
     this.initializeForm();
     this.getMarkets(); 
-    this.routeSub = this.route.params.subscribe((params: Params) => {      
-      this.startupLink = params['link'];
-        if(this.startupLink)
-          this.getStartupData();
-    });   
+    this.userSub = this.authService.user.subscribe(user => {
+      if(!!user){
+        this.user = user;
+        this.getStartupData();
+      }
+      else{
+        this.inLoginProcess = true;
+        this.authService.setLaunchLogin({"action":"Startup Edit Page Load", blockReloadPage : true});
+      }
+    });
+    this.loginCancelSub = this.authService.loginCompleted.subscribe(flag => {
+      if(this.inLoginProcess && flag){
+        this.getStartupData();
+      }
+    })
+    this.loginCompSub = this.authService.loginCanceled.subscribe(flag => {
+      if(flag){
+        this.router.navigate([`${environment.betaBaseUrl}/`]);
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -201,5 +218,14 @@ export class StartupEditComponent implements OnInit {
     if(this.itemSub){
       this.itemSub.unsubscribe();
     }    
+    if(this.userSub){
+      this.userSub.unsubscribe();
+    }
+    if(this.loginCompSub){
+      this.loginCompSub.unsubscribe();
+    }   
+    if(this.loginCancelSub){
+      this.loginCancelSub.unsubscribe();
+    }   
   }
 }

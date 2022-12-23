@@ -15,8 +15,9 @@ import { StartupService } from 'src/app/services/startup.service';
 import { ShowToasterService } from 'src/app/shared/show-toaster-service.service';
 import { environment } from 'src/environments/environment';
 import { SEOService } from '../../../services/SEO.service';
-import { WindowRefService } from 'src/app/services/windowRef.service';
+
 import { isPlatformBrowser } from '@angular/common';
+import { WindowRefService } from 'src/app/services/windowRef.service';
 
 @Component({
   selector: 'app-startup',

@@ -3,10 +3,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { DealService } from 'src/app/services/deal.service';
-import { DealHomeService } from 'src/app/services/deal_home.service';
 import { UserService } from 'src/app/services/user.service';
 import { WindowRefService } from 'src/app/services/windowRef.service';
+
 import { ShowToasterService } from 'src/app/shared/show-toaster-service.service';
 import { environment } from 'src/environments/environment';
 

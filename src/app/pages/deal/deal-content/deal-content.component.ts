@@ -28,32 +28,46 @@ export class DealContentComponent implements OnInit {
   private userSub:Subscription;
   private routeSub:Subscription;
   private itemSub: Subscription;
+  private loginCancelSub:Subscription;
+  private loginCompSub:Subscription;
 
   isLoading = false; isSpinnerLoading= false; user:User; dealLink:string; dealRequest:any;
   quillConfig:any; html:any; intervalId:any; isIntervalLaunched = false;
   nextPressed = false; submitted = false; productForm: FormGroup; 
   images = []; headerImages = []; horizontalImages = []; 
   
-  isBrowser;
+  isBrowser; inLoginProcess = false;
 
   constructor(private formBuilder: FormBuilder, private dealService: DealService, 
     private authService : AuthService, private router:Router, private route: ActivatedRoute,
     private toastrService:ToastrService, @Inject(PLATFORM_ID) private platformId
   ) {
+      this.routeSub = this.route.params.subscribe((params: Params) => {
+        this.dealLink = params['link'];
+      }); 
+
       this.isBrowser = isPlatformBrowser(platformId);
+
       this.userSub = this.authService.user.subscribe(user => {
         if(!!user){
           this.user = user;
+          this.getDealRequestData();
+        }
+        else{
+          this.inLoginProcess = true;
+          this.authService.setLaunchLogin({"action":"Deal Draft Page Load", blockReloadPage : true});
         }
       });
-
-      this.routeSub = this.route.params.subscribe((params: Params) => {
-        this.dealLink = params['link'];
-        if(!this.dealLink)
-          this.router.navigate([`${environment.dealsBaseUrl}/`]);
-        else
+      this.loginCancelSub = this.authService.loginCompleted.subscribe(flag => {
+        if(this.inLoginProcess && flag){
           this.getDealRequestData();
-      }); 
+        }
+      })
+      this.loginCompSub = this.authService.loginCanceled.subscribe(flag => {
+        if(flag){
+          this.router.navigate([`${environment.dealsBaseUrl}/`]);
+        }
+      })
 
       this.quillConfig = QuillConfig.getQuillConfig();
 
@@ -271,5 +285,11 @@ export class DealContentComponent implements OnInit {
     if(this.routeSub){
       this.routeSub.unsubscribe();
     }
+    if(this.loginCompSub){
+      this.loginCompSub.unsubscribe();
+    }   
+    if(this.loginCancelSub){
+      this.loginCancelSub.unsubscribe();
+    }   
   }
 }

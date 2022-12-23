@@ -20,25 +20,44 @@ import { CheckoutService } from 'src/app/services/checkout.service';
 export class DealCartComponent implements OnInit {
   previousUrl: Observable<string> = this.urlService.previousUrl$;
   private userSub:Subscription;
+  private loginCancelSub:Subscription;
+  private loginCompSub:Subscription;
+
   appCurSign = environment.appCurSign;
 
   isLoading = true; user:User; stripe:any; qtyList = []; balRewardAmt = 0;
   deals = []; subTotal = 0; subDiscAmount = 0; rewardAmt = 0; 
   discAmt = 0; totalAmt = 0; cartPromo = null; couponCode= ''; couponError = null; 
-  stripeId:any; countryId=null; countryData; countryList=[]; prevUrl;
+  stripeId:any; countryId=null; countryData; countryList=[]; prevUrl; inLoginProcess = false;
 
   constructor(private router:Router, private authService:AuthService,
     private cartService :CartService, private urlService: UrlService, private checkoutService:CheckoutService,
     private toastrService:ShowToasterService
   ) {     
-    this.setCartPromoDefaultVal();      
-    this.getCountryList();
-    this.loadQuantityList();
+    this.setCartPromoDefaultVal();    
+    this.loadQuantityList(); 
+    
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
         this.user = user;
+        this.getCountryList();
+      }
+      else{
+        this.inLoginProcess = true;
+        this.authService.setLaunchLogin({"action":"Deal cart Page Load", blockReloadPage : true});
       }
     });
+    this.loginCancelSub = this.authService.loginCompleted.subscribe(flag => {
+      if(this.inLoginProcess && flag){
+        this.getCountryList();
+      }
+    })
+    this.loginCompSub = this.authService.loginCanceled.subscribe(flag => {
+      if(flag){
+        this.router.navigate([`${environment.dealsBaseUrl}/`]);
+      }
+    })
+
   }
 
   ngOnInit(): void {
@@ -457,6 +476,12 @@ export class DealCartComponent implements OnInit {
     if(this.userSub){
       this.userSub.unsubscribe();
     }
+    if(this.loginCompSub){
+      this.loginCompSub.unsubscribe();
+    }   
+    if(this.loginCancelSub){
+      this.loginCancelSub.unsubscribe();
+    }   
   }
 }
 

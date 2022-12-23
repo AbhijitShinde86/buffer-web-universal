@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { BetaHomeService } from 'src/app/services/beta_home.service';
 import { VendorService } from 'src/app/services/vendor.service';
-import { WindowRefService } from 'src/app/services/windowRef.service';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -23,12 +23,8 @@ export class VendorHomeComponent implements OnInit {
 
   constructor(private authService: AuthService, private vendorService:VendorService,
     private betaHomeService:BetaHomeService, private router:Router,
-    private toastrService:ToastrService, private windowRefService: WindowRefService
+    private toastrService:ToastrService
   ) { 
-    if(!this.authService.checkIsStillLogged()){
-      this.authService.logout();
-      this.windowRefService.nativeWindow.location.reload();
-    }
     this.userSub = this.authService.user.subscribe(user => {
       if(!!user){
         this.user = user;
