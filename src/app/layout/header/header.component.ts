@@ -349,6 +349,7 @@ export class HeaderComponent implements OnInit {
     this.signUpModalDisplay = 'block';
     this.error = null;
     this.isLoginMode = true; this.isOTPSent = false; this.isForgotMode = false; 
+    this.initializeForms();
     this.setDefault();
   }
   
