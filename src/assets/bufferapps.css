@@ -1202,9 +1202,9 @@
      -webkit-background-clip:text;
      text-transform: uppercase;
   }
-  .recent-prd {
+  /* .recent-prd {
     margin-top: -140px;
-  }
+  } */
   .saasword {
     color: #920898;
     font-weight: 900;
@@ -1230,8 +1230,9 @@
   }
   .trending-home {
     padding: 100px 0;
-    background: rgb(164,27,232);
-    background: linear-gradient(71deg, rgba(164,27,232,1) 0%, rgba(236,27,161,1) 47%, rgba(241,130,26,1) 100%);
+    background: #243763;
+    /* background: rgb(164,27,232);
+    background: linear-gradient(71deg, rgba(164,27,232,1) 0%, rgba(236,27,161,1) 47%, rgba(241,130,26,1) 100%); */
   }
   .dealsticky {
     position: sticky;
@@ -1306,6 +1307,27 @@
   }
   .width75 {
     width: 75%;
+  }
+  /* Main home section */
+  .main-section {
+    background-image: url('featureimage.png');
+  }
+  .main-section h1 {
+    font-size: 4rem;
+    color: #243763;
+  }
+  .main-section p {
+    font-size: 1.2rem;
+    font-family: monospace;
+  }
+  .btn-explore {
+    background-color: #243763;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+  }
+  .btn-explore:hover {
+    color: #F0ECCF;
   }
   
   @media only screen and (max-width: 768px) {
@@ -1406,6 +1428,13 @@
   }
   .revquediv {
     width: 100%;
+  }
+  .main-section h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+  .main-section p {
+    text-align: center;
   }
   }
   .sib-btn-joinnow {

@@ -1,23 +1,24 @@
-<div class="bgcolorf9">
-    <section class="top-home position-relative">
-        <div class="container">
-            <!-- <h4 class="saasword position-absolute">SaaS</h4>
-            <h5 class="betaword position-absolute">Beta Testing</h5>
-            <h4 class="mrktword position-absolute">Marketing</h4>
-            <h5 class="prword position-absolute">Products</h5> -->
-            <div class="text-center text-white">
+<section class="main-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
                 <h1 class="fw-bold">Apps for Everyday Entrepreneurs!</h1>
-                <p>The place to discover your next favorite Apps 🚀</p>
+                <p class="pt-4">The place to discover your next favorite Apps 🚀</p>
+                <div class="pt-5 pb-3 text-center text-md-start"><a class="btn-explore px-4 py-3" href="https://bufferapps.com/beta-testing">Explore Products</a></div>
             </div>
+            <div class="col-md-6"></div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="pb-5 recent-prd position-relative">
+<div class="bgcolorf9">
+
+    <section class="py-5 recent-prd position-relative">
         <div class="container">
             <div class="row gx-lg-5">
                 <div class="col-md-8">
                     <div *ngIf="recentList.length > 0">
-                        <h5 class="pb-3 fw-bold text-white">Recently Added Beta launch Products</h5>
+                        <h5 class="pb-3 fw-bold">Recently Added Beta launch Products</h5>
                         <div class="d-lg-flex mb-4" *ngFor="let startup of recentList;">
                             <div class="homeprimg">
                                 <div *ngIf="startup.imagePaths?.length == 0">
@@ -48,7 +49,7 @@
                 </div>
                 
                 <div class="col-md-4">
-                    <h5 class="pb-3 fw-bold text-white"><i class="bi bi-lightning-charge"></i> Trending Deal</h5>
+                    <h5 class="pb-3 fw-bold"><i class="bi bi-lightning-charge"></i> Trending Deal</h5>
                     <div class="dealsticky">
                         <div> <!-- *ngIf="trendingDeal" -->
                             <a href="https://bufferapps.com/lifetime-deals/linktube"><img class="border-top-radius" src="https://media.publit.io/file/fil-X8H.png" alt="LinkTube Deal" width="100%"></a>
