@@ -20,20 +20,20 @@
           </ul>
         </div>
       </div>
-      <ul class="navbar-nav mb-2 mb-lg-0">
+      <ul class="navbar-nav mb-2 mb-lg-0 mt-3 mt-md-0">
         <!-- <li class="nav-item" *ngIf="!isDealsPage">
           <a class="nav-link text-center" (click)="onDealsClick()">Deals</a>
         </li> -->
-        <li class="nav-item">
-          <a class="nav-link text-center orangebg me-2" target="_blank" href="https://launch.bufferapps.com/join-beta">Get $10</a>
+        <li class="nav-item mb-2 mb-md-0">
+          <a class="nav-link text-center orangebg me-md-2" target="_blank" href="https://launch.bufferapps.com/join-beta">Get $10</a>
         </li>
-        <li class="nav-item" *ngIf="!isBetaPage">
+        <li class="nav-item mb-2 mb-md-0" *ngIf="!isBetaPage">
           <a class="nav-link text-center" (click)="onBetaClick()">Beta Launch</a>
         </li>
         <app-header-beta *ngIf="isBetaModule" [userData]="userData"></app-header-beta>
         <app-header-deals *ngIf="isDealsModule" [userData]="userData"></app-header-deals>
-        <li class="nav-item ms-2" *ngIf="!userData">
-          <button class="nav-link btn btn-primary text-white" (click)="onShowSignUpModal()"> Sign In</button>
+        <li class="nav-item ms-md-2 mb-2 mb-md-0" *ngIf="!userData">
+          <button class="nav-link btn btn-primary text-white m-auto" (click)="onShowSignUpModal()"> Sign In</button>
         </li>
         <li class="nav-item" *ngIf="userData">
 

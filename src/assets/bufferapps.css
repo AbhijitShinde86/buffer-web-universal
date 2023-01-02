@@ -926,7 +926,7 @@
   border-color: #f83812;
   }
   .profile-view {
-  background-image: url(assets/profile-gradient.jpg);
+  background-image: url(profile-gradient.jpg);
   background-size: cover;
   }
   .prof-box {
@@ -1170,64 +1170,6 @@
     position: relative;
     margin-top: -150px;
   }
-  .top-home {
-    padding: 50px 0 200px;
-    /* background: rgb(164,27,232); */
-    background: #0e0e0e;
-    /* background: linear-gradient(71deg, rgba(164,27,232,1) 0%, rgba(236,27,161,1) 47%, rgba(241,130,26,1) 100%); */
-  }
-  .top-home h1 {
-    /* text-shadow: 2px 2px 0px #5e5e5e;
-    mix-blend-mode: screen; */
-    /* animation: fadeIn 2.5s linear forwards; */
-    /* background: linear-gradient(
-      to right, 
-      hsl(0deg 100% 62%),
-      hsl(204 100% 59%)
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
-    font-size: 3rem;
-    background-image: linear-gradient(
-      to right,
-      #462523 0,
-    #ffc060 22%, 
-      #f6e27a 45%,
-      #f6f2c0 50%,
-      #f6e27a 55%,
-      #ffc060 78%,
-      #462523 100%
-      );
-     color:transparent;
-     -webkit-background-clip:text;
-     text-transform: uppercase;
-  }
-  /* .recent-prd {
-    margin-top: -140px;
-  } */
-  .saasword {
-    color: #920898;
-    font-weight: 900;
-    /* transform: rotate(-15deg); */
-  }
-  .mrktword {
-    right: 7%;
-    color: #cd2e07;
-    font-weight: 900;
-    /* transform: rotate(17deg); */
-  }
-  .prword {
-    font-weight: 900;
-    right: 10%;
-    top: 40%;
-    color: #db3b01;
-  }
-  .betaword {
-    font-weight: 900;
-    top: 36%;
-    left: 10%;
-    color: #a108a7;
-  }
   .trending-home {
     padding: 100px 0;
     background: #243763;
@@ -1273,11 +1215,11 @@
     width: 325px;
     height: 450px;
     position: absolute;
-    left: 5px;
+    /* left: 5px; */
     top: -30px;
     background: #673ab7;
     border-radius: 10px;
-    color: #fff;
+    color: #000;
   }
   .upgradegreen {
     color: #2fd811;
@@ -1311,6 +1253,7 @@
   /* Main home section */
   .main-section {
     background-image: url('featureimage.png');
+    background-size: cover;
   }
   .main-section h1 {
     font-size: 4rem;
@@ -1329,9 +1272,19 @@
   .btn-explore:hover {
     color: #F0ECCF;
   }
+  .tydiv {
+    background: #243763;
+  }
+  .tydiv h2 {
+    color: #fffab0;
+  }
+  .tytxt {
+    width: 700px; 
+    margin: auto;
+  }
   
   @media only screen and (max-width: 768px) {
-  .prvcypages, .redeembox {
+  .prvcypages, .redeembox, .tytxt {
     width: 100%;
   }
   .mw-100, .aboutfooterimg {
@@ -1429,12 +1382,29 @@
   .revquediv {
     width: 100%;
   }
+  .main-section {
+    background-image: none;
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  }
   .main-section h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: center;
+    color: #fff;
   }
   .main-section p {
     text-align: center;
+    font-size: 1rem;
+    color: #e6e6e6;
+  }
+  .btn-explore {
+    background-color: #fffdd9;
+    color: #243763;
+  }
+  .mainplan {
+    top: 0;
   }
   }
   .sib-btn-joinnow {
