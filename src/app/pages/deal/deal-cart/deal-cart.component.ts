@@ -287,16 +287,16 @@ export class DealCartComponent implements OnInit {
   }
 
   loadQuantityList() {
-    this.qtyList.push({ qtyName: 'One', qty: 1 });
-    this.qtyList.push({ qtyName: 'Two', qty: 2 });
-    this.qtyList.push({ qtyName: 'Three', qty: 3 });
-    this.qtyList.push({ qtyName: 'Four', qty: 4 });
-    this.qtyList.push({ qtyName: 'Five', qty: 5 });
-    this.qtyList.push({ qtyName: 'Six', qty: 6 });
-    this.qtyList.push({ qtyName: 'Seven', qty: 7 });
-    this.qtyList.push({ qtyName: 'Eight', qty: 8 });
-    this.qtyList.push({ qtyName: 'Nine', qty: 9 });
-    this.qtyList.push({ qtyName: 'Ten', qty: 10 });
+    this.qtyList.push({ qtyName: '1', qty: 1 });
+    this.qtyList.push({ qtyName: '2', qty: 2 });
+    this.qtyList.push({ qtyName: '3', qty: 3 });
+    this.qtyList.push({ qtyName: '4', qty: 4 });
+    this.qtyList.push({ qtyName: '5', qty: 5 });
+    this.qtyList.push({ qtyName: '6', qty: 6 });
+    this.qtyList.push({ qtyName: '7', qty: 7 });
+    this.qtyList.push({ qtyName: '8', qty: 8 });
+    this.qtyList.push({ qtyName: '9', qty: 9 });
+    this.qtyList.push({ qtyName: '10', qty: 10 });
   }
 
   getCountryList(){
