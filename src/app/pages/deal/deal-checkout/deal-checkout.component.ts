@@ -47,6 +47,7 @@ export class DealCheckoutComponent implements OnInit {
   // };
   cardOptions: StripeCardElementOptions = {
     iconStyle: 'solid',
+    hidePostalCode: true,
     style: {
       base: {
         iconColor: '#c4f0ff',
