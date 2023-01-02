@@ -17,7 +17,7 @@ export class SendInBlueService{
                 "listIds": [
                     listId
                 ],
-                "updateEnabled": false,
+                "updateEnabled": true,
                 "email": subscribe.email
             },
             {
@@ -38,7 +38,7 @@ export class SendInBlueService{
                 "listIds": [
                     listId
                 ],
-                "updateEnabled": false,
+                "updateEnabled": true,
                 "email": email
             },
             {
@@ -59,7 +59,7 @@ export class SendInBlueService{
                 "listIds": [
                     listId
                 ],
-                "updateEnabled": false,
+                "updateEnabled": true,
                 "email": email
             },
             {

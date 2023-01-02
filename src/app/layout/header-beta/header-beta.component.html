@@ -10,15 +10,15 @@
         </ul>
     </li> -->
     <li class="nav-item">
-        <a class="nav-link btn" routerLink="/join-beta" aria-current="page">Join Beta</a>
+        <a class="nav-link btn mb-2 mb-md-0" routerLink="/join-beta" aria-current="page">Join Beta</a>
     </li>
-    <li class="nav-item" *ngIf="userData?.scnt > 0">
+    <li class="nav-item mb-2 mb-md-0" *ngIf="userData?.scnt > 0">
         <a class="nav-link btn btn-neutral" aria-current="page" (click)="onVendorClick()">Vendor</a>
     </li>
-    <li class="nav-item" *ngIf="!userData">
+    <li class="nav-item mb-2 mb-md-0" *ngIf="!userData">
         <a class="nav-link btn btn-neutral" aria-current="page" (click)="onSubmitProductClick()" >+ Submit Product</a>
     </li>
-    <li class="nav-item" *ngIf="userData && userData?.scnt == 0">
+    <li class="nav-item mb-2 mb-md-0" *ngIf="userData && userData?.scnt == 0">
         <a class="nav-link btn btn-neutral" aria-current="page" (click)="onSubmitProductClick()" >+ Submit Product</a>
     </li>
 </div>
