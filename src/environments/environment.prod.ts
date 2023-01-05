@@ -10,7 +10,7 @@ export const environment = {
   sendinblueListId:4, 
   sendinblueAllusersListId:7, 
   sendinblueVendorsListId:6,  
-  sendinblueApiKey:"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",  
+  sendinblueApiKey:"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",
   cryptoJsSecretKey : '12345678901234567890',
   cacheTimeInMinutes:30,
   betaBaseUrl:'/beta-listing',
